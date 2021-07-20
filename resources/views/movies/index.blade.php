@@ -44,7 +44,11 @@
 <td>{{ $movie->title }}</td>
 <td>{{ $movie->description }}</td>
 <td><a href="{{ $movie->imdb }}">IMDB</a></td>
- {{-- <td><img height="80px" src="{{ asset('storage/movie/' . $movie->image) }}" /></td> --> --}}
+ @if (($media = $movie->getMedia())&& $media->isNotEmpty())
+  <td><img  src="{{$media->first()->getUrl('thumb')}}" /></td> 
+@else 
+  <td></td>
+@endif
 <td>{{ $movie->seen }}</td>
 <td>{{ $movie->schedule }}</td>
 
@@ -77,15 +81,19 @@
 <th>Schedule</th>
 <th width="280px">Action</th>
 </tr>
-@foreach ($users as $user)
+@foreach ($userMovies as $userMovie)
 <tr>
-<td>{{ $user->id }}</td>
-<td>{{ $user->title }}</td>
-<td>{{ $user->description }}</td>
-<td><a href="{{ $user->imdb }}">IMDB</a></td>
-{{-- <td><img height="80px" src="{{ asset('storage/movie/' . $user->image) }}" /></td> --> --}}
-<td>{{ $user->seen }}</td>
-<td>{{ $user->schedule }}</td>
+<td>{{ $userMovie->id }}</td>
+<td>{{ $userMovie->title }}</td>
+<td>{{ $userMovie->description }}</td>
+<td><a href="{{ $userMovie->imdb }}">IMDB</a></td>
+ @if (($media = $userMovie->getMedia())&& $media->isNotEmpty())
+  <td><img  src="{{$media->first()->getUrl('thumb')}}" /></td> 
+@else 
+  <td></td>
+@endif
+<td>{{ $userMovie->seen }}</td>
+<td>{{ $userMovie->schedule }}</td>
 <td>
 
 <form action="{{ route('movies.destroy',$movie->id) }}"
@@ -130,20 +138,20 @@ route('movies.edit',$movie->id) }}">Edit</a>
 <th>Seen</th>
 <th>Schedule</th>
 
-@foreach ($dates as $date)
+@foreach ($scheduledMovies as $scheduledMovie)
 
 <tr>
-<td>{{ $date->id }}</td>
-<td>{{ $date->title }}</td>
-<td>{{ $date->description }}</td>
-<td><a href="{{ $date->imdb }}">IMDB</a></td>
-@if (($media = $date->getMedia())&& $media->isNotEmpty())
+<td>{{ $scheduledMovie->id }}</td>
+<td>{{ $scheduledMovie->title }}</td>
+<td>{{ $scheduledMovie->description }}</td>
+<td><a href="{{ $scheduledMovie->imdb }}">IMDB</a></td>
+@if (($media = $scheduledMovie->getMedia())&& $media->isNotEmpty())
   <td><img  src="{{$media->first()->getUrl('thumb')}}" /></td> 
-  @else 
+@else 
   <td></td>
-  @endif
-<td>{{ $date->seen }}</td>
-<td>{{ $date->schedule }}</td>
+@endif
+<td>{{ $scheduledMovie->seen }}</td>
+<td>{{ $scheduledMovie->schedule }}</td>
 </tr>
 @endforeach
 </table>

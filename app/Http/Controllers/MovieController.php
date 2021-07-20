@@ -18,18 +18,16 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $dates = Movie::orderBy('schedule', 'asc')->get();
+        $scheduledMovies = Movie::orderBy('schedule', 'asc')->get();
         $name = \Auth::user()->name;
-        $users = DB::table('movies')
-        ->where('user', '=', $name)
-        ->get();
+        $userMovies = Movie::where('user', '=', $name)
+            ->get();
 
 
         $movies = Movie::latest()->paginate(5);
-  return view('movies.index',compact('movies','users','dates'))
-  ->with('i', (request()->input('page', 1) - 1) * 5);
-  Auth::user()->name;
-    }
+        return view('movies.index',compact('movies','userMovies','scheduledMovies'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+            }
 
     /**
      * Show the form for creating a new resource.
@@ -70,13 +68,16 @@ class MovieController extends Controller
             //]),['image'=>$image]);
             
 
-           $movie = Movie::create($request->only(['title',
-            'description',
-            'imdb',
-            'seen',
-            'schedule',
-            'user',
-        ]));
+        $movie = Movie::create(
+            $request->only([
+                'title',
+                'description',
+                'imdb',
+                'seen',
+                'schedule',
+                'user',
+            ])
+        );
 
             if ($request->hasFile('image')) {
 
@@ -92,12 +93,12 @@ class MovieController extends Controller
                $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
 
                $movie ->addMedia($path)
-               ->toMediaCollection();
+                ->toMediaCollection();
             
             }
 
             return redirect()->route('movies.index')
-            ->with('success','Movie added successfully.');
+                ->with('success','Movie added successfully.');
     }
 
     /**
@@ -144,7 +145,7 @@ class MovieController extends Controller
             $movie->update($request->all());
            
             return redirect()->route('movies.index')
-            ->with('success','Movie updated successfully');
+                ->with('success','Movie updated successfully');
     }
 
     /**
@@ -158,6 +159,6 @@ class MovieController extends Controller
         $movie->delete();
 
         return redirect()->route('movies.index')
-        ->with('success','Movie deleted successfully');
+            ->with('success','Movie deleted successfully');
     }
 }

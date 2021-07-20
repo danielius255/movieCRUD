@@ -12,13 +12,18 @@ class Movie extends Model implements HasMedia
 {
     use InteractsWithMedia;
     protected $fillable = [
-        'title', 'description', 'imdb','seen','schedule','user'
+        'title', 
+        'description', 
+        'imdb',
+        'seen',
+        'schedule',
+        'user'
         ];
 
         public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-              ->width(368)
-              ->height(232);
+              ->width(200)
+              ->height(160);
     }
 }

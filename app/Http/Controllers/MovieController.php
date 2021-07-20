@@ -1,0 +1,163 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Models\Movie;
+use App\Models\User;
+use Auth;
+use Illuminate\Support\Facades\Storage;
+
+class MovieController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $dates = Movie::orderBy('schedule', 'asc')->get();
+        $name = \Auth::user()->name;
+        $users = DB::table('movies')
+        ->where('user', '=', $name)
+        ->get();
+
+
+        $movies = Movie::latest()->paginate(5);
+  return view('movies.index',compact('movies','users','dates'))
+  ->with('i', (request()->input('page', 1) - 1) * 5);
+  Auth::user()->name;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('movies.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'imdb'=>'required',
+            'seen' => 'required',
+            'schedule' => 'required',
+            'user' => 'required',
+            ]);
+           // $image = null;
+            
+           
+           
+           // $data = array_merge($request->only(['title',
+             //   'description',
+               // 'imdb',
+                //'seen',
+                //'schedule',
+                //'user',
+            //]),['image'=>$image]);
+            
+
+           $movie = Movie::create($request->only(['title',
+            'description',
+            'imdb',
+            'seen',
+            'schedule',
+            'user',
+        ]));
+
+            if ($request->hasFile('image')) {
+
+                $request->validate([
+                    'image' => 'mimes:jpeg,bmp,png' 
+                ]);
+    
+                
+                $request->file('image')->store('movie','public');
+    
+               // $image = $request->file('image')->hashName();
+
+               $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
+
+               $movie ->addMedia($path)
+               ->toMediaCollection();
+            
+            }
+
+            return redirect()->route('movies.index')
+            ->with('success','Movie added successfully.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Movie $movie)
+    {
+        return view('movies.show',compact('movie'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Movie $movie)
+    {
+        return view('movies.edit',compact('movie'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Movie $movie)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'imdb'=>'required',
+            'image' => 'required',
+            'seen' => 'required',
+            'schedule' => 'required',
+            'user' => 'required',
+            ]);
+           
+            $movie->update($request->all());
+           
+            return redirect()->route('movies.index')
+            ->with('success','Movie updated successfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Movie $movie)
+    {
+        $movie->delete();
+
+        return redirect()->route('movies.index')
+        ->with('success','Movie deleted successfully');
+    }
+}

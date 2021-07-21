@@ -78,9 +78,7 @@ class="form-control" placeholder="Image**">
  <div class="form-group">
  <strong>Seen:</strong>
  <br>
-<input type="checkbox" id="seen" name="seen" value="Seen">
-  <label for="seen"> I have seen this movie</label><br>
-  <input type="checkbox" id="seen" name="seen" value="Not Seen">
+<input type="checkbox" id="seen" name="seen" value="0">
   <label for="seen"> I have not seen this movie</label><br>
  </div>
  </div>
@@ -89,13 +87,6 @@ class="form-control" placeholder="Image**">
  <strong>Schedule:</strong>
 <input type="datetime-local" name="schedule" value="{{ $movie->schedule }}"
 class="form-control" placeholder="Schedule">
- </div>
- </div>
- <div class="col-xs-12 col-sm-12 col-md-12">
- <div class="form-group">
- <strong>User:</strong>
-<input readonly type="text" name="user" value="{{ $movie->user }}"
-class="form-control" placeholder="User">
  </div>
  </div>
  <div class="col-xs-12 col-sm-12 col-md-12 text-center">

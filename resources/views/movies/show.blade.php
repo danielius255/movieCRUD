@@ -64,7 +64,11 @@ Back</a>
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>Seen:</strong>
- {{ $movie->seen }}
+ @if( $movie->seen ==1)
+ Seen
+ @else
+ Not Seen
+ @endif
  </div>
  </div>
  <div class="col-xs-12 col-sm-12 col-md-12">
@@ -73,12 +77,7 @@ Back</a>
  {{ $movie->schedule }}
  </div>
  </div>
- <div class="col-xs-12 col-sm-12 col-md-12">
- <div class="form-group">
- <strong>User:</strong>
- {{ $movie->user }}
- </div>
- </div>
+
  </div>
 
                     

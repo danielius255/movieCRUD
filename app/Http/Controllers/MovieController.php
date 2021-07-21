@@ -19,8 +19,8 @@ class MovieController extends Controller
     public function index()
     {
         $scheduledMovies = Movie::orderBy('schedule', 'asc')->get();
-        $name = \Auth::user()->name;
-        $userMovies = Movie::where('user', '=', $name)
+        $Userid = \Auth::id();
+        $userMovies = Movie::where('user_id', '=', $Userid)
             ->get();
 
 
@@ -51,9 +51,9 @@ class MovieController extends Controller
             'title' => 'required',
             'description' => 'required',
             'imdb'=>'required',
-            'seen' => 'required',
+            'seen',
             'schedule' => 'required',
-            'user' => 'required',
+            'user_id' => 'required',
             ]);
 
         $movie = Movie::create(
@@ -63,7 +63,7 @@ class MovieController extends Controller
                 'imdb',
                 'seen',
                 'schedule',
-                'user',
+                'user_id',
             ])
         );
 
@@ -124,21 +124,19 @@ class MovieController extends Controller
             'title' => 'required',
             'description' => 'required',
             'imdb'=>'required',
-            'seen' => 'required',
+            'seen',
             'schedule' => 'required',
-            'user' => 'required',
             ]);
            
             // $movie->update($request->all());
 
-            $movie = Movie::update(
+            $movie = $movie->update(
                 $request->only([
                     'title',
                     'description',
                     'imdb',
                     'seen',
                     'schedule',
-                    'user',
                 ])
             );
             if ($request->hasFile('image')) {
@@ -172,6 +170,7 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         $movie->delete();
+        
 
         return redirect()->route('movies.index')
             ->with('success','Movie deleted successfully');

@@ -49,7 +49,11 @@
 @else 
   <td></td>
 @endif
-<td>{{ $movie->seen }}</td>
+ @if( $movie->seen ==1)
+ <td>Seen</td>
+ @else
+ <td>Not seen</td>
+ @endif
 <td>{{ $movie->schedule }}</td>
 
 </tr>
@@ -92,7 +96,11 @@
 @else 
   <td></td>
 @endif
-<td>{{ $userMovie->seen }}</td>
+ @if( $userMovie->seen ==1)
+ <td>Seen</td>
+ @else
+ <td>Not seen</td>
+ @endif
 <td>{{ $userMovie->schedule }}</td>
 <td>
 
@@ -150,7 +158,12 @@ route('movies.edit',$userMovie->id) }}">Edit</a>
 @else 
   <td></td>
 @endif
-<td>{{ $scheduledMovie->seen }}</td>
+ @if( $scheduledMovie->seen ==1)
+ <td>Seen</td>
+ @else
+ <td>Not seen</td>
+ @endif
+
 <td>{{ $scheduledMovie->schedule }}</td>
 </tr>
 @endforeach

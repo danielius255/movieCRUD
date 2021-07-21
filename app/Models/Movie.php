@@ -8,16 +8,17 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+
 class Movie extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia, HasFactory;
     protected $fillable = [
         'title', 
         'description', 
         'imdb',
         'seen',
         'schedule',
-        'user'
+        'user_id'
         ];
 
         public function registerMediaConversions(Media $media = null): void

@@ -77,10 +77,8 @@ placeholder="add an image">
  <div class="form-group">
  <strong>Seen:</strong>
  <br>
-<input type="checkbox" id="seen" name="seen" value="Seen">
+<input type="checkbox" id="seen" name="seen" value="1">
   <label for="seen"> I have seen this movie</label><br>
-  <input type="checkbox" id="seen" name="seen" value="Not Seen">
-  <label for="seen"> I have not seen this movie</label><br>
  </div>
  </div>
  <div class="col-xs-12 col-sm-12 col-md-12">
@@ -93,8 +91,8 @@ placeholder="Datepicker">
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>User:</strong>
- <input readonly type="text" name="user" value="{{ Auth::user()->name }}" class="form-control"
-placeholder="{{ Auth::user()->name }}">
+ <input readonly type="text" name="user_id" value="{{ Auth::user()->id }}" class="form-control"
+placeholder="{{ Auth::user()->id }}">
  </div>
  </div>
  <div class="col-xs-12 col-sm-12 col-md-12 text-center">

@@ -14,16 +14,17 @@
                         </div>
                     @endif
                     
-<div class="row">
- <div class="col-lg-12 margin-tb">
- <div class="pull-left">
- <h2>Add New Movie</h2>
- </div>
- <div class="pull-right">
- <a class="btn btn-primary" href="{{ route('movies.index') }}">
-Back</a>
- </div>
- </div>
+                            <div class="row">
+                                <div class="col-lg-12 margin-tb">
+                                    <div class="pull-left">
+                                        <h2>Add New Movie</h2>
+                                    </div>
+                                <div class="pull-right">
+
+                            <a class="btn btn-primary" href="{{ route('movies.index') }}">Back</a>
+
+                                </div>
+                        </div>
 </div>
 
 @if ($errors->any())
@@ -42,13 +43,13 @@ input.<br><br>
  @csrf
 
  <div class="row">
- <div class="col-xs-12 col-sm-12 col-md-12">
- <div class="form-group">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
  <strong>Title:</strong>
  <input type="text" name="title" class="form-control"
 placeholder="Title">
- </div>
- </div>
+        </div>
+    </div>
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>Description:</strong>
@@ -85,7 +86,7 @@ placeholder="add an image">
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>Schedule:</strong>
- <input type="date" name="schedule" class="form-control"
+ <input type="datetime-local" name="schedule" class="form-control"
 placeholder="Datepicker">
  </div>
  </div>

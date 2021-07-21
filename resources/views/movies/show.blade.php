@@ -55,7 +55,10 @@ Back</a>
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>Image:</strong>
- {{ $movie->image }}
+ <br>
+@if (($media = $movie->getMedia())&& $media->isNotEmpty())
+  <img  src="{{$media->first()->getUrl('thumb')}}" />
+@endif
  </div>
  </div>
  <div class="col-xs-12 col-sm-12 col-md-12">

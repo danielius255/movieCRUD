@@ -61,34 +61,40 @@ name="description" placeholder="Description">{{ $movie->description }}</textarea
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>IMDB:</strong>
-<input type="text" name="imdb" value="{{ $movie->image }}"
+<input type="text" name="imdb" value="{{ $movie->imdb }}"
 class="form-control" placeholder="Image**">
  </div>
  </div>
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>Image:</strong>
-<input type="text" name="image" value="{{ $movie->image }}"
+ @if (($media = $movie->getMedia())&& $media->isNotEmpty())
+<input type="file" name="image" value="{{$media->first()->getUrl('thumb')}}"
 class="form-control" placeholder="Image**">
+@endif
  </div>
  </div>
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>Seen:</strong>
-<input type="text" name="title" value="{{ $movie->seen }}"
-class="form-control" placeholder="Seen**">
+ <br>
+<input type="checkbox" id="seen" name="seen" value="Seen">
+  <label for="seen"> I have seen this movie</label><br>
+  <input type="checkbox" id="seen" name="seen" value="Not Seen">
+  <label for="seen"> I have not seen this movie</label><br>
  </div>
- </div><div class="col-xs-12 col-sm-12 col-md-12">
+ </div>
+ <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>Schedule:</strong>
-<input type="text" name="Schedule" value="{{ $movie->schedule }}"
+<input type="datetime-local" name="schedule" value="{{ $movie->schedule }}"
 class="form-control" placeholder="Schedule">
  </div>
  </div>
  <div class="col-xs-12 col-sm-12 col-md-12">
  <div class="form-group">
  <strong>User:</strong>
-<input type="text" name="user" value="{{ $movie->user }}"
+<input readonly type="text" name="user" value="{{ $movie->user }}"
 class="form-control" placeholder="User">
  </div>
  </div>

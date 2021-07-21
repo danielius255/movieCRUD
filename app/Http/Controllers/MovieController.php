@@ -24,7 +24,7 @@ class MovieController extends Controller
             ->get();
 
 
-        $movies = Movie::latest()->paginate(5);
+        $movies = Movie::latest()->simplePaginate(5);
         return view('movies.index',compact('movies','userMovies','scheduledMovies'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
             }
@@ -55,18 +55,6 @@ class MovieController extends Controller
             'schedule' => 'required',
             'user' => 'required',
             ]);
-           // $image = null;
-            
-           
-           
-           // $data = array_merge($request->only(['title',
-             //   'description',
-               // 'imdb',
-                //'seen',
-                //'schedule',
-                //'user',
-            //]),['image'=>$image]);
-            
 
         $movie = Movie::create(
             $request->only([
@@ -136,13 +124,40 @@ class MovieController extends Controller
             'title' => 'required',
             'description' => 'required',
             'imdb'=>'required',
-            'image' => 'required',
             'seen' => 'required',
             'schedule' => 'required',
             'user' => 'required',
             ]);
            
-            $movie->update($request->all());
+            // $movie->update($request->all());
+
+            $movie = Movie::update(
+                $request->only([
+                    'title',
+                    'description',
+                    'imdb',
+                    'seen',
+                    'schedule',
+                    'user',
+                ])
+            );
+            if ($request->hasFile('image')) {
+
+                $request->validate([
+                    'image' => 'mimes:jpeg,bmp,png' 
+                ]);
+    
+                
+                $request->file('image')->store('movie','public');
+    
+               // $image = $request->file('image')->hashName();
+
+               $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
+
+               $movie ->addMedia($path)
+                ->toMediaCollection();
+            
+            }
            
             return redirect()->route('movies.index')
                 ->with('success','Movie updated successfully');

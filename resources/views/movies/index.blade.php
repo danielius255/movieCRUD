@@ -57,7 +57,7 @@
 </table>
 
 {!! $movies->links() !!}
-
+<br>
 <div class="pull-right">
  
 <h3>Your movies</h3>
@@ -96,14 +96,14 @@
 <td>{{ $userMovie->schedule }}</td>
 <td>
 
-<form action="{{ route('movies.destroy',$movie->id) }}"
+<form action="{{ route('movies.destroy',$userMovie->id) }}"
 method="POST">
 
  <a class="btn btn-info" href="{{
-route('movies.show',$movie->id) }}">Show</a>
+route('movies.show',$userMovie->id) }}">Show</a>
 
  <a class="btn btn-primary" href="{{
-route('movies.edit',$movie->id) }}">Edit</a>
+route('movies.edit',$userMovie->id) }}">Edit</a>
 
  @csrf
 @method('DELETE')
@@ -115,7 +115,7 @@ route('movies.edit',$movie->id) }}">Edit</a>
 @endforeach
 </table>
 
-
+<br>
 <div class="pull-right">
  
 <h3>Upcoming movies</h3>

@@ -9,6 +9,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 
+
 class MovieController extends Controller
 {
     /**
@@ -53,9 +54,8 @@ class MovieController extends Controller
             'imdb'=>'required',
             'seen',
             'schedule' => 'required',
-            'user_id' => 'required',
             ]);
-
+            
         $movie = Movie::create(
             $request->only([
                 'title',
@@ -63,7 +63,7 @@ class MovieController extends Controller
                 'imdb',
                 'seen',
                 'schedule',
-                'user_id',
+                
             ])
         );
 

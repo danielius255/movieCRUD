@@ -88,13 +88,7 @@ placeholder="add an image">
 placeholder="Datepicker">
  </div>
  </div>
- <div class="col-xs-12 col-sm-12 col-md-12">
- <div class="form-group">
- <strong>User:</strong>
- <input readonly type="text" name="user_id" value="{{ Auth::user()->id }}" class="form-control"
-placeholder="{{ Auth::user()->id }}">
- </div>
- </div>
+
  <div class="col-xs-12 col-sm-12 col-md-12 text-center">
  <button type="submit" class="btn btn-primary">Submit</button>
  </div>

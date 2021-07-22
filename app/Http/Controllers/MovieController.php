@@ -75,8 +75,6 @@ class MovieController extends Controller
     
                 
                 $request->file('image')->store('movie','public');
-    
-               // $image = $request->file('image')->hashName();
 
                $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
 
@@ -127,9 +125,7 @@ class MovieController extends Controller
             'seen',
             'schedule' => 'required',
             ]);
-           
-            // $movie->update($request->all());
-
+    
             $movie = $movie->update(
                 $request->only([
                     'title',
@@ -147,8 +143,6 @@ class MovieController extends Controller
     
                 
                 $request->file('image')->store('movie','public');
-    
-               // $image = $request->file('image')->hashName();
 
                $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
 

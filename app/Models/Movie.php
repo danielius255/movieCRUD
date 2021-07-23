@@ -21,17 +21,17 @@ class Movie extends Model implements HasMedia
         'user_id'
         ];
 
-        public static function booted()
-        {
-            static::creating(function($movie)
-            {
-                $movie->user_id=\Auth::id();
-            });
-        }
-        public function registerMediaConversions(Media $media = null): void
+    public static function booted()
     {
-        $this->addMediaConversion('thumb')
-              ->width(200)
-              ->height(160);
+        static::creating(function($movie)
+        {
+                $movie->user_id=\Auth::id();
+        });
+    }
+    public function registerMediaConversions(Media $media = null): void
+    {
+    $this->addMediaConversion('thumb')
+            ->width(200)
+            ->height(160);
     }
 }

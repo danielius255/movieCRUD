@@ -21,15 +21,12 @@ class MovieController extends Controller
     {
         $scheduledMovies = Movie::orderBy('schedule', 'asc')->get();
         $Userid = \Auth::id();
-        $userMovies = Movie::where('user_id', '=', $Userid)
-            ->get();
-
-
+        $userMovies = Movie::where('user_id', '=', $Userid)->get();
         $movies = Movie::latest()->simplePaginate(5);
+
         return view('movies.index',compact('movies','userMovies','scheduledMovies'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
-            }
-
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -39,7 +36,6 @@ class MovieController extends Controller
     {
         return view('movies.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -54,8 +50,8 @@ class MovieController extends Controller
             'imdb'=>'required',
             'seen',
             'schedule' => 'required',
-            ]);
-            
+            ]
+        );
         $movie = Movie::create(
             $request->only([
                 'title',
@@ -63,30 +59,19 @@ class MovieController extends Controller
                 'imdb',
                 'seen',
                 'schedule',
-                
             ])
         );
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'mimes:jpeg,bmp,png' 
+            ]);  
+            $request->file('image')->store('movie','public');
+            $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
+            $movie ->addMedia($path)->toMediaCollection();
+        }
 
-            if ($request->hasFile('image')) {
-
-                $request->validate([
-                    'image' => 'mimes:jpeg,bmp,png' 
-                ]);
-    
-                
-                $request->file('image')->store('movie','public');
-
-               $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
-
-               $movie ->addMedia($path)
-                ->toMediaCollection();
-            
-            }
-
-            return redirect()->route('movies.index')
-                ->with('success','Movie added successfully.');
+        return redirect()->route('movies.index')->with('success','Movie added successfully.');
     }
-
     /**
      * Display the specified resource.
      *
@@ -97,7 +82,6 @@ class MovieController extends Controller
     {
         return view('movies.show',compact('movie'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -108,7 +92,6 @@ class MovieController extends Controller
     {
         return view('movies.edit',compact('movie'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -125,36 +108,27 @@ class MovieController extends Controller
             'seen',
             'schedule' => 'required',
             ]);
-    
-            $movie = $movie->update(
-                $request->only([
-                    'title',
-                    'description',
-                    'imdb',
-                    'seen',
-                    'schedule',
+        $movie = $movie->update(
+            $request->only([
+                'title',
+                'description',
+                'imdb',
+                'seen',
+                'schedule',
                 ])
-            );
-            if ($request->hasFile('image')) {
-
-                $request->validate([
-                    'image' => 'mimes:jpeg,bmp,png' 
-                ]);
-    
-                
-                $request->file('image')->store('movie','public');
-
-               $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
-
-               $movie ->addMedia($path)
-                ->toMediaCollection();
-            
-            }
-           
-            return redirect()->route('movies.index')
-                ->with('success','Movie updated successfully');
+        );
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'mimes:jpeg,bmp,png' 
+            ]);
+            $request->file('image')->store('movie','public');
+            $path = Storage::disk('public')->path('movie/'.$request->file('image')->hashName()); 
+            $movie ->addMedia($path)->toMediaCollection();
+        }
+        
+        return redirect()->route('movies.index')
+            ->with('success','Movie updated successfully');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -164,7 +138,6 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         $movie->delete();
-        
 
         return redirect()->route('movies.index')
             ->with('success','Movie deleted successfully');

@@ -17,12 +17,15 @@
                    
                         <div class="row">
                             <div class="col-lg-12 margin-tb">
+
                                 <div class="pull-left">
                                     <h2> Show Movie</h2>
                                 </div>
+
                                 <div class="pull-right">
                                     <a class="btn btn-primary" href="{{ route('movies.index') }}">Back</a>
                                 </div>
+
                             </div>
                         </div>
 
@@ -61,6 +64,7 @@
                                     <strong>IMDB:</strong>
                                     {{ $movie->imdb }}
                                 </div>
+
                             </div>
 
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -73,6 +77,7 @@
                                         <img  src="{{$media->first()->getUrl('thumb')}}" />
                                     @endif
                                 </div>
+
                             </div>
 
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -85,6 +90,7 @@
                                         Not Seen
                                     @endif
                                 </div>
+
                             </div>
 
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -93,6 +99,7 @@
                                     <strong>Schedule:</strong>
                                     {{ $movie->schedule }}
                                 </div>
+                                
                             </div>
 
                         </div>

@@ -16,12 +16,15 @@
                     
                         <div class="row">
                             <div class="col-lg-12 margin-tb">
+
                                 <div class="pull-left">
                                     <h2>Add New Movie</h2>
                                 </div>
+
                                 <div class="pull-right">
                                 <a class="btn btn-primary" href="{{ route('movies.index') }}">Back</a>
                                 </div>
+
                             </div>   
                         </div>
 
@@ -66,6 +69,7 @@
                                     <strong>IMDB link:</strong>
                                     <input type="text" name="imdb" class="form-control"placeholder="add an image">
                                 </div>
+
                             </div>
 
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -101,8 +105,10 @@
 
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
+
                         </div>
                     </form> 
+                    
                 </div>
             </div>
         </div>

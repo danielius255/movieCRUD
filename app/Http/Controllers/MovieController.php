@@ -8,6 +8,7 @@ use App\Models\Movie;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 
 class MovieController extends Controller
@@ -101,6 +102,12 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
+        if (! Gate::allows('update-post', $movie)) {
+
+            return redirect()->route('movies.index')
+                ->with('success','This movie does not belong to you!');
+        }
+
         $request->validate([
             'title' => 'required',
             'description' => 'required',

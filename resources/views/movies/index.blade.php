@@ -18,6 +18,7 @@
 
                             <a class="btn btn-success" href="{{ route('movies.create')}}"> Add new movie</a>
                             <br><br>
+
                         </div>
                         @if ($message = Session::get('success'))
 
@@ -25,7 +26,7 @@
 
                                 <p>{{ $message }}</p>
 
-                                </div>
+                            </div>
 
                         @endif
 
@@ -52,13 +53,14 @@
                                     <td><img  src="{{$media->first()->getUrl('thumb')}}" /></td> 
                                 @else 
                                     <td></td>
-                                 @endif
+                                @endif
 
                                 @if( $movie->seen ==1)
                                 <td>Seen</td>
                                 @else
                                 <td>Not seen</td>
                                 @endif
+
                                 <td>{{ $movie->schedule }}</td>
                                 </tr>
 
@@ -67,7 +69,6 @@
                         </table>
 
                         {!! $movies->links() !!}
-
                         <br>
 
                         <div class="pull-right">
@@ -75,7 +76,6 @@
                             <h3>Your movies</h3>
 
                         </div>
-
                         <br>
                     
                         @if ($message = Session::get('success'))
@@ -84,7 +84,7 @@
 
                                 <p>{{ $message }}</p>
 
-                                </div>
+                            </div>
                         @endif
 
                         <table class="table table-bordered">
@@ -119,8 +119,8 @@
                                 @else
                                     <td>Not seen</td>
                                 @endif
-                                <td>{{ $userMovie->schedule }}</td>
 
+                                <td>{{ $userMovie->schedule }}</td>
                                 <td>
                                     <form action="{{ route('movies.destroy',$userMovie->id) }}"method="POST">
 
@@ -167,10 +167,11 @@
                             <th>Image</th>
                             <th>Seen</th>
                             <th>Schedule</th>
-                            <tr>
+                            </tr>
 
                                 @foreach ($scheduledMovies as $scheduledMovie)
 
+                                    <tr>
                                     <td>{{ $scheduledMovie->id }}</td>
                                     <td>{{ $scheduledMovie->title }}</td>
                                     <td>{{ $scheduledMovie->description }}</td>
